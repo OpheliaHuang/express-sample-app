@@ -10,7 +10,7 @@ spec:
   - name: source-repo
     value: https://github.com/OpheliaHuang/express-sample-app
   - name: image-repo
-    value: quay.io/ophelia_huang/my-express
+    value: quay.io/ophelia_huang/express-sample-app
   pipelineRef:
     name: nodejs
   workspaces:

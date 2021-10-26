@@ -17,7 +17,8 @@ spec:
       script: |
         #!/bin/sh
         set -e
-
+        echo appname space is : $(params.app-namespace)
+        echo filepath is : ./source/$(params.manifest)
         kubectl apply -n $(params.app-namespace) -f ./source/$(params.manifest) --validate=false
     - name: verify-deploy
       image: quay.io/upslopeio/kubectl:latest
