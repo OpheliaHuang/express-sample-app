@@ -5,7 +5,9 @@ metadata:
 spec:
   params:
   - name: source-repo
-    value: https://github.com/<your-account>/express-sample-app
+    value: https://github.com/OpheliaHuang/express-sample-app
+  - name: image-repo
+    value: quay.io/ophelia_huang/my-express
   pipelineRef:
     name: nodejs
   workspaces:
