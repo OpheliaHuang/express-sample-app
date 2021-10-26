@@ -1,4 +1,4 @@
 node_modules/
 .idea/
 manifests.yaml
-*cred*.yaml
+*Secret*.yaml
