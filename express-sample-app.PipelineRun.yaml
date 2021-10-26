@@ -3,6 +3,7 @@ kind: PipelineRun
 metadata:
   generateName: express-sample-app-
 spec:
+  serviceAccountName: build-bot
   params:
   - name: source-repo
     value: https://github.com/OpheliaHuang/express-sample-app
