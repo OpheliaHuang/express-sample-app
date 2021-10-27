@@ -8,3 +8,6 @@ resources:
 - deploy.Task.yaml
 - nodejs.Pipeline.yaml
 - webhook-receiver.EventListener.yaml
+- git-credentials.Secret.yaml
+- production-repository.ConfigMap.yaml
+- save-configuration.Task.yaml

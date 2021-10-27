@@ -40,6 +40,9 @@ spec:
                     storage: 1Gi
                 accessModes:
                   - ReadWriteOnce
+    - name: git-credentials
+      secret:
+        secretName: git-credentials
 ---
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
@@ -92,7 +95,7 @@ roleRef:
 subjects:
   - name: webhook-receiver
     kind: ServiceAccount
-    
+
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
