@@ -9,3 +9,86 @@ spec:
         name: webhook-receiver
       bindings:
         - ref: webhook-receiver
+--- 
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: webhook-receiver
+spec:
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: express-sample-app-
+      spec:
+        serviceAccountName: build-bot
+        params:
+          - name: app-name
+            value: express-sample-app
+          - name: image-repo
+            value: quay.io/ophelia_huang/express-sample-app
+          - name: source-repo
+            value: https://github.com/OpheliaHuang/express-sample-app
+        pipelineRef:
+          name: nodejs
+        workspaces:
+          - name: pipeline-shared-data
+            volumeClaimTemplate:
+              spec:
+                resources:
+                  requests:
+                    storage: 1Gi
+                accessModes:
+                  - ReadWriteOnce
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: webhook-receiver
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: webhook-receiver
+rules:
+  - resources:
+      - eventlisteners
+      - triggerbindings
+      - triggertemplates
+    apiGroups:
+      - triggers.tekton.dev
+    verbs:
+      - get
+  - resources:
+      - pipelineruns
+      - pipelineresources
+    apiGroups:
+      - tekton.dev
+    verbs:
+      - create
+  - resources:
+      - configmaps
+    apiGroups:
+      - ""
+    verbs:
+      - list
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: webhook-receiver
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: webhook-receiver
+spec:
+  port:
+    targetPort: 8080
+  to:
+    name: el-webhook-receiver
+    kind: Service
+    weight: 100
