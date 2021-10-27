@@ -7,3 +7,4 @@ resources:
 - create-configuration.Task.yaml
 - deploy.Task.yaml
 - nodejs.Pipeline.yaml
+- webhook-receiver.EventListener.yaml
